@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
+
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -19,16 +20,28 @@ public class ProductService {
     }
 
     public List<ProductListDTO> allProducts() {
-        return productRepository.findAll()
-                .stream()
+        return productRepository.findAll().stream()
                 .map(p -> createProductListDTO(p))
                 .collect(Collectors.toList());
     }
 
     private ProductListDTO createProductListDTO(Product p) {
         String catNameWithId = categoryService.findCategoryNameById(p.getCategoryId())
-                .map(cn -> p.getCategoryId() + " " + cn)
-                .orElse("BŁĄD! kategoria produktu o ID= " + p.getCategoryId() + " nie istnieje.");
+                 .map(cn -> p.getCategoryId() + " " + cn)
+                 .orElse("BŁĄD! Kategoria produktu o ID= "+ p.getCategoryId() +" nie istnieje.");
         return p.toListDTO(catNameWithId);
+    }
+
+    public ProductDTO findProductById(Integer productId) {
+        return productRepository.findById(productId)
+                .map(p -> p.toDTO())
+                .orElseThrow(() -> new ProductNotFoundException(productId));
+    }
+
+    public void editProduct(ProductDTO productDTO) {
+        Product product = productRepository.findById(productDTO.getId())
+                .orElseThrow(() -> new ProductNotFoundException(productDTO.getId()));
+        product.apply(productDTO);
+        productRepository.save(product);
     }
 }

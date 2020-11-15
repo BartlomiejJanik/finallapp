@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
 </head>
 <body>
+<div th:replace="fragments/header :: headerFragment"></div>
 <!--<div th:replace="fragments/header :: header"/>-->
 <form action="/categories">
     <input type="text" name="searchText" th:value="${searchText}">

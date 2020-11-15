@@ -19,10 +19,6 @@ public class Product {
     private ProductType productType;
     private Integer categoryId;
 
-    public Product() {
-
-    }
-
     public static Product fromDTO(ProductDTO productDTO) {
         Product newProduct = new Product();
         newProduct.title = productDTO.getTitle();
@@ -34,7 +30,6 @@ public class Product {
 
         return newProduct;
     }
-
 
     public Integer getCategoryId() {
         return categoryId;
@@ -49,5 +44,25 @@ public class Product {
                 price,
                 productType,
                 categoryNameWithId);
+    }
+
+    public ProductDTO toDTO() {
+        return new ProductDTO(
+                id,
+                title,
+                description,
+                pictureUrl,
+                price,
+                productType,
+                categoryId);
+    }
+
+    public void apply(ProductDTO productDTO) {
+        this.title = productDTO.getTitle();
+        this.description = productDTO.getDescription();
+        this.pictureUrl = productDTO.getPictureUrl();
+        this.price = productDTO.getPrice();
+        this.productType = productDTO.getProductType();
+        this.categoryId = productDTO.getCategoryId();
     }
 }

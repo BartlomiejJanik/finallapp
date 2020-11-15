@@ -15,7 +15,7 @@ public class CategoryTreeDTO {
     }
 
     public String getText (){
-        return categoryName;
+        return id + " " + categoryName;
     }
 
     public String getParent(){

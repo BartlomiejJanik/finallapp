@@ -18,7 +18,10 @@
 <hr>
 <form action="/categories" method="post">
     <input name="categoryName" placeholder="Category name"><br>
-    <input name="parentId" placeholder="Parent ID"><br>
+    <select name="parentId">
+        <option th:value="''" th:text="'Choose parent'"></option>
+        <option th:each="p : ${parentsList}" th:value="${p.id}" th:text="${p.id} + ' ' + ${p.categoryName}" id="parentsList"></option>
+    </select>
     <button>Add category</button>
 </form>
 <!--<div th:replace="fragments/footer :: footer"></div>-->

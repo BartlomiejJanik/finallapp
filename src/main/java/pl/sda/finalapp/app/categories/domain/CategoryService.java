@@ -7,6 +7,7 @@ import pl.sda.finalapp.app.categories.persistence.Category;
 import pl.sda.finalapp.app.categories.persistence.CategoryDAO;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +45,14 @@ public class CategoryService {
         return categoryDAO.getCategoryList().stream()
                 .map(c -> c.toDTO())
                 .collect(Collectors.toList());
+    }
+
+    public Optional<String> findCategoryNameById(Integer id) {
+        return categoryDAO.getCategoryList()
+                .stream()
+                .filter(c -> c.getId().equals(id))
+                .findFirst()
+                .map(c -> c.getCategoryName());
     }
 
     private void openAllParents(CategoryTreeDTO child, List<CategoryTreeDTO> parents) {

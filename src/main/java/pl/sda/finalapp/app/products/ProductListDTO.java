@@ -1,24 +1,26 @@
 package pl.sda.finalapp.app.products;
 
+import pl.sda.finalapp.app.categories.persistence.Category;
+
 import java.math.BigDecimal;
 
-public class ProductDTO {
+public class ProductListDTO {
     private Integer id;
     private String title;
     private String description;
     private String pictureUrl;
     private BigDecimal price;
     private ProductType productType;
-    private Integer categoryId;
+    private String category;
 
-    public ProductDTO(String title, String description, String pictureUrl, BigDecimal price, ProductType productType, Integer categoryId) {
-
+    public ProductListDTO(Integer id, String title, String description, String pictureUrl, BigDecimal price, ProductType productType, String category) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.pictureUrl = pictureUrl;
         this.price = price;
         this.productType = productType;
-        this.categoryId = categoryId;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -45,7 +47,7 @@ public class ProductDTO {
         return productType;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public String getCategory() {
+        return category;
     }
 }

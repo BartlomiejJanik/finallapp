@@ -17,11 +17,15 @@ public class ProductController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/products")
     public String products(Model model) {
+        productService.allProducts();
         model.addAttribute("productTypesList", ProductType.values());
         model.addAttribute("categoriesList", categoryService.findAll());
+        model.addAttribute("productsList",productService.allProducts());
         return "productsPage";
     }
 
@@ -32,11 +36,12 @@ public class ProductController {
                              @RequestParam BigDecimal price,
                              @RequestParam ProductType productType,
                              @RequestParam Integer categoryId) {
-        new ProductDTO(title
-                ,description
-                ,pictureUrl
-                ,price,productType
-                ,categoryId);
+
+        productService.addProduct(new ProductDTO(title
+                , description
+                , pictureUrl
+                , price, productType
+                , categoryId));
         return "redirect:/products";
     }
 

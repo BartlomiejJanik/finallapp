@@ -5,6 +5,31 @@
     <title>Products</title>
 </head>
 <body>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Picture</th>
+        <th>Price</th>
+        <th>Product Type</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="p : ${productsList}">
+        <td th:text="${p.id}">Id</td>
+        <td th:text="${p.title}">Title</td>
+        <td th:text="${p.description}">Description</td>
+        <td th:text="${p.pictureUrl}">Picture</td>
+        <td th:text="${p.price}">Price</td>
+        <td th:text="${p.productType}">Product Type</td>
+        <td th:text="${p.category}">Category</td>
+        <td></td>
+    </tr>
+</table>
+
+<hr>
 <form action="/products" method="post">
     <input name="title" placeholder="Title"><br>
     <input name="description" placeholder="Description"><br>

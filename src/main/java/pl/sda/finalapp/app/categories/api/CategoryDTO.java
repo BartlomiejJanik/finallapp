@@ -5,7 +5,7 @@ public class CategoryDTO {
     private Integer id;
     private String categoryName;
 
-    public CategoryDTO(Integer id, String categoryName) {
+    public CategoryDTO(Integer id, String categoryName) { //DTO Data transfer object
         this.id = id;
         this.categoryName = categoryName;
     }

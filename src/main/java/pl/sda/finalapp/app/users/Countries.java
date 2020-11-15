@@ -11,7 +11,6 @@ public enum Countries {
     private final String symbol;
 
     Countries(String countryName, String symbol) {
-
         this.countryName = countryName;
         this.symbol = symbol;
     }

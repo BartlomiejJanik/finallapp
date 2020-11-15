@@ -8,7 +8,7 @@ public class CategoryTreeDTO {
     private String categoryName;
     private CategoryState state;
 
-    public CategoryTreeDTO(Integer id, Integer parentId, String categoryName) {
+    public CategoryTreeDTO(Integer id, Integer parentId, String categoryName) { //DTO Data transfer object
         this.id = id;
         this.parentId = parentId;
         this.categoryName = categoryName;

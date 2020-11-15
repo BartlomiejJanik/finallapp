@@ -15,6 +15,16 @@ public class ProductDTO {
     private ProductType productType;
     private Integer categoryId;
 
+    public ProductDTO(String title, String description, String pictureUrl, BigDecimal price, ProductType productType, Integer categoryId) {
+
+        this.title = title;
+        this.description = description;
+        this.pictureUrl = pictureUrl;
+        this.price = price;
+        this.productType = productType;
+        this.categoryId = categoryId;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -20,7 +20,7 @@
                 th:text="${t.plName}">
         </option>
     </select>
-    <select name="parentId">
+    <select name="categoryId">
         <option th:value="''"
                 th:text="'Choose category'"></option>
         <option th:each="c : ${categoriesList}"

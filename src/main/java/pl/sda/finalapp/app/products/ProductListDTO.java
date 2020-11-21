@@ -1,7 +1,5 @@
 package pl.sda.finalapp.app.products;
 
-import pl.sda.finalapp.app.categories.persistence.Category;
-
 import java.math.BigDecimal;
 
 public class ProductListDTO {

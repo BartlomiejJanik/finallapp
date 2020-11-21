@@ -1,12 +1,17 @@
 package pl.sda.finalapp.app.categories.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.finalapp.app.categories.api.CategoryDTO;
 import pl.sda.finalapp.app.categories.api.CategoryTreeDTO;
-import pl.sda.finalapp.app.categories.persistence.Category;
+import pl.sda.finalapp.app.categories.persistence.CategoryFromFileDTO;
 import pl.sda.finalapp.app.categories.persistence.CategoryDAO;
+import pl.sda.finalapp.app.categories.persistence.CategoryRepository;
 
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -14,6 +19,8 @@ import java.util.stream.Collectors;
 public class CategoryService {
 
     private CategoryDAO categoryDAO = CategoryDAO.getInstance();
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public List<CategoryTreeDTO> findCategories(String searchText) {
         final List<CategoryTreeDTO> dtos = categoryDAO.getCategoryList().stream()
@@ -35,8 +42,8 @@ public class CategoryService {
     }
 
     public void addCategory(String categoryName, Integer parentId) {
-        final List<Category> categoryList = categoryDAO.getCategoryList();
-        Category newCategory = Category.applyFromCategory(categoryName);
+        final List<CategoryFromFileDTO> categoryList = categoryDAO.getCategoryList();
+        CategoryFromFileDTO newCategory = CategoryFromFileDTO.applyFromCategory(categoryName);
         newCategory.setParentId(parentId);
         categoryList.add(newCategory);
     }
@@ -71,4 +78,36 @@ public class CategoryService {
                     return p;
                 });
     }
+
+    @PostConstruct
+    void initializeCategories() {
+        if (categoryRepository.count() == 0) {
+            CategoryDAO categoryDAO = CategoryDAO.getInstance();
+            Map<Integer, Integer> oldChildAndParentIdsMap = new HashMap<>();
+            Map<Integer, Integer> newIdtoOldIdMap = new HashMap<>();
+            final List<CategoryFromFileDTO> categoryDTOList = categoryDAO.getCategoryList();
+
+            for (CategoryFromFileDTO dto : categoryDTOList) {
+                oldChildAndParentIdsMap.put(dto.getId(), dto.getParentId());
+                Category category = new Category(dto.getCategoryName());
+                Category saveCategory = categoryRepository.save(category);
+                newIdtoOldIdMap.put(saveCategory.getId(), dto.getId());
+            }
+            for (Integer newId : newIdtoOldIdMap.keySet()) {
+                Category category = categoryRepository.
+                        findById(newId).
+                        orElseThrow(() -> new RuntimeException("Kategoria o takim id: " + newId + " nie istnieje"));
+                Integer oldId = newIdtoOldIdMap.get(newId);
+                Integer oldParentId = oldChildAndParentIdsMap.get(oldId);
+                Integer newParentId = newIdtoOldIdMap
+                        .entrySet()
+                        .stream()
+                        .filter(e -> e.getValue().equals(oldParentId))
+                        .map(e -> e.getKey()).findFirst().orElse(null);
+                category.applyParentId(newParentId);
+                categoryRepository.save(category);
+            }
+        }
+    }
+
 }

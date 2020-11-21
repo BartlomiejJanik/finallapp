@@ -4,7 +4,7 @@ import pl.sda.finalapp.app.categories.api.CategoryDTO;
 import pl.sda.finalapp.app.categories.api.CategoryTreeDTO;
 
 /* domenowy model danych */
-public class Category {
+public class CategoryFromFileDTO {
 
     private static Integer idCounter = 0;
     private Integer id;
@@ -12,8 +12,8 @@ public class Category {
     private String categoryName;
     private Integer depth;
 
-    public static Category applyFromCategory(String t){
-        Category category = new Category();
+    public static CategoryFromFileDTO applyFromCategory(String t){
+        CategoryFromFileDTO category = new CategoryFromFileDTO();
         category.categoryName = t.trim();
         category.id = ++idCounter;
         category.depth = calculateDepth(t);

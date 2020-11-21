@@ -17,10 +17,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public String products(Model model) {
+    public String products(@RequestParam(required = false) String searchText,
+                           @RequestParam(required = false) ProductType productType,
+                           @RequestParam(required = false) Integer categoryId,
+                           Model model) {
         model.addAttribute("productTypesList", ProductType.values());
         model.addAttribute("categoriesList", categoryService.findAll());
-        model.addAttribute("productsList", productService.allProducts());
+        model.addAttribute("productsList", productService.allProducts(searchText, productType, categoryId));
         return "productsPage";
     }
 

@@ -7,7 +7,28 @@
 <body>
 <div th:replace="/fragments/header :: headerFragment">
 </div>
-<table>
+<form action="/products" method="get">
+    <input name="searchText" placeholder="Wyszukaj">
+    <select name="productType">
+        <option th:value="''"
+                th:text="'Choose type'">
+
+        </option>
+        <option th:each="t : ${productTypesList}"
+                th:value="${t}"
+                th:text="${t.plName}">
+        </option>
+    </select>
+    <select name="categoryId">
+        <option th:value="''"
+                th:text="'Choose category'"></option>
+        <option th:each="c : ${categoriesList}"
+                th:value="${c.id}"
+                th:text="${c.id} + ' ' + ${c.categoryName}" id="parentsList"></option>
+    </select>
+    <button>search</button>
+</form>
+<table border="1">
     <tr>
         <th>ID</th>
         <th>Title</th>

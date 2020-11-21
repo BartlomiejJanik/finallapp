@@ -43,6 +43,7 @@ public class Category {
 
     public Category applyParentId(Integer newParentId) {
         this.parentId = newParentId;
+        return this;
     }
 
     public CategoryTreeDTO toTreeDTO() {

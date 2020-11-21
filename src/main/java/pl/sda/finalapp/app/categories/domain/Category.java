@@ -41,7 +41,7 @@ public class Category {
         return categoryName;
     }
 
-    public void applyParentId(Integer newParentId) {
+    public Category applyParentId(Integer newParentId) {
         this.parentId = newParentId;
     }
 

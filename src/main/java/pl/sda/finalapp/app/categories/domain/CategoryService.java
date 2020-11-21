@@ -117,10 +117,10 @@ public class CategoryService {
         }
     }
 
-    public void moveCategory(Integer newParentId, Integer moveId) {
-        Category category = categoryRepository.findById(moveId)
-                .orElseThrow(() -> new RuntimeException("Kategoria o id: " + moveId + "nie została znaleziona"));
-        category.applyParentId(newParentId);
+    public void moveCategory(Integer newParentId, Integer movedId) {
+        final Category category = categoryRepository.findById(movedId)
+                .orElseThrow(() -> new RuntimeException("Kategoria o id:" + movedId + " nie została odnaleziona"))
+                .applyParentId(newParentId);
         categoryRepository.save(category);
     }
 }

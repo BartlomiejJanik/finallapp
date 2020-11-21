@@ -1,9 +1,8 @@
 package pl.sda.finalapp.app.users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -24,6 +23,9 @@ public class User {
     private String pesel;
     private String phone;
     private boolean preferEmails;
+    @ManyToMany
+    @JoinTable(name = "Users_roles")
+    private List<Role> roles;
 
     public User(String firstName, String lastName, String eMail, String passwordHash, String city, String country, String zipCode, String street, String birthDate, String pesel, String phone, boolean preferEmails) {
         this.firstName = firstName;
@@ -43,12 +45,23 @@ public class User {
     public User() {
     }
 
-    public static User applyDTO(UserRegistrationDTO dto) {
+    public void addRole(Role role) {
+        if (roles == null) {
+            roles = new ArrayList<>();
+            roles.add(role);
+        } else if (!roles.contains(role)) {
+            roles.add(role);
+
+        }
+
+    }
+
+    public static User applyDTO(UserRegistrationDTO dto, String passwordHash) {
         User user = new User();
         user.firstName = dto.getFirstName();
         user.lastName = dto.getLastName();
         user.eMail = dto.geteMail();
-        user.passwordHash = String.valueOf(dto.getPassword().hashCode());
+        user.passwordHash = passwordHash;
         user.city = dto.getCity();
         user.country = dto.getCountry();
         user.zipCode = dto.getZipCode();

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+
+<form action="/login-process" method="post">
+    <p th:if="${param.error}">Podano nieprawidłowy login lub hasło.</p><br>
+    <input name="username" placeholder="Login"><br>
+    <input type="password" name="password" placeholder="Password"><br>
+    <button>Zaloguj</button>
+</form>
+
+</body>
+</html>

@@ -6,10 +6,11 @@
 </head>
 <body>
 <div th:fragment="headerFragment">
-    <a href="/categories">Kategoria</a>
+    <a href="/">Strona domowa</a>
+    <a href="/categories">Kategorie</a>
     <a href="/products">Produkty</a>
-    <a href="/registration">Rejestracja</a>
-    <a></a>
+    <a th:if="!${@userContextService.userName()}" href="/registration">Rejestracja</a>
+    <p th:text="${@userContextService.userName()}"></p>
 </div>
 </body>
 </html>

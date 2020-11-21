@@ -53,7 +53,7 @@ public class ProductService {
         if(searchText != null && !searchText.isBlank() && productType != null && categoryId != null){
             products = productRepository.findProducts(searchText, productType, categoryId);
         } else {
-            products = productRepository.findAll();
+            products = productRepository.findAll(); //Tu powinny być wszystkie kombinacje wyszukiwań.
         }
         return products.stream()
                 .map(p -> createProductListDTO(p))

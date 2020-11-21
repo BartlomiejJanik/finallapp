@@ -81,7 +81,7 @@ public class CategoryService {
 
     @PostConstruct
     void initializeCategories() {
-        if (categoryRepository.count() == 0) {
+        if (categoryRepository.count() != 0) {
         return;
         }
             CategoryDAO categoryDAO = CategoryDAO.getInstance();

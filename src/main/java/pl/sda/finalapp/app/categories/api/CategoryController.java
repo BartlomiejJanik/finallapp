@@ -32,4 +32,9 @@ public class CategoryController {
         return "redirect:/categories?searchText="+categoryName;
     }
 
+    @PostMapping("/moveCategory")
+    public void moveCategory(@RequestParam Integer newParentId,@RequestParam Integer moveId){
+        categoryService.moveCategory(newParentId,moveId);
+    }
+
 }

@@ -18,12 +18,13 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryService {
 
-    private CategoryDAO categoryDAO = CategoryDAO.getInstance();
+
     @Autowired
     private CategoryRepository categoryRepository;
 
     public List<CategoryTreeDTO> findCategories(String searchText) {
-        final List<CategoryTreeDTO> dtos = categoryDAO.getCategoryList().stream()
+        final List<CategoryTreeDTO> dtos = categoryRepository.findAll()
+                .stream()
                 .map(c -> c.toTreeDTO())
                 .collect(Collectors.toList());
 
@@ -42,24 +43,17 @@ public class CategoryService {
     }
 
     public void addCategory(String categoryName, Integer parentId) {
-        final List<CategoryFromFileDTO> categoryList = categoryDAO.getCategoryList();
-        CategoryFromFileDTO newCategory = CategoryFromFileDTO.applyFromCategory(categoryName);
-        newCategory.setParentId(parentId);
-        categoryList.add(newCategory);
+        categoryRepository.save(new Category(categoryName,parentId));
     }
 
     public List<CategoryDTO> findAll() {
-        return categoryDAO.getCategoryList().stream()
+        return categoryRepository.findAll().stream()
                 .map(c -> c.toDTO())
                 .collect(Collectors.toList());
     }
 
     public Optional<String> findCategoryNameById(Integer id) {
-        return categoryDAO.getCategoryList()
-                .stream()
-                .filter(c -> c.getId().equals(id))
-                .findFirst()
-                .map(c -> c.getCategoryName());
+        return categoryRepository.findCategoryNameById(id);
     }
 
     private void openAllParents(CategoryTreeDTO child, List<CategoryTreeDTO> parents) {
@@ -121,6 +115,12 @@ public class CategoryService {
             Category saveCategory = categoryRepository.save(category);
             newIdtoOldIdMap.put(saveCategory.getId(), dto.getId());
         }
+    }
+
+    public void moveCategory(Integer newParentId, Integer moveId) {
+        Category category = categoryRepository.findById(moveId)
+                .orElseThrow(() -> new RuntimeException("Kategoria o id: " + moveId + "nie została znaleziona"));
+        category.applyParentId(newParentId);
     }
 }
 

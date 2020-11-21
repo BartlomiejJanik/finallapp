@@ -45,7 +45,7 @@
         })
         $('#container').on('move_node.jstree', function (e, data) {
             console.log(data)
-            $.post("/moveCat", {newParentId: data.parent, movedId: data.node.id})
+            $.post("/moveCategory", {newParentId: data.parent, movedId: data.node.id})
         })
     });
 </script>

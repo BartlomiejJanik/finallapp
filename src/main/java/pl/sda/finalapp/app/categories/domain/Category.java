@@ -1,5 +1,8 @@
 package pl.sda.finalapp.app.categories.domain;
 
+import pl.sda.finalapp.app.categories.api.CategoryDTO;
+import pl.sda.finalapp.app.categories.api.CategoryTreeDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +12,7 @@ import javax.persistence.Id;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer Id;
+    private Integer id;
     private Integer parentId;
     private String categoryName;
 
@@ -20,8 +23,14 @@ public class Category {
     public Category() {
     }
 
+    public Category(String categoryName, Integer parentId) {
+
+        this.categoryName = categoryName;
+        this.parentId = parentId;
+    }
+
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public Integer getParentId() {
@@ -34,5 +43,14 @@ public class Category {
 
     public void applyParentId(Integer newParentId) {
         this.parentId = newParentId;
+    }
+
+    public CategoryTreeDTO toTreeDTO() {
+        return new CategoryTreeDTO(id,parentId,categoryName);
+
+    }
+
+    public CategoryDTO toDTO() {
+        return new CategoryDTO(id,categoryName);
     }
 }

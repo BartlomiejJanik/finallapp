@@ -121,6 +121,7 @@ public class CategoryService {
         Category category = categoryRepository.findById(moveId)
                 .orElseThrow(() -> new RuntimeException("Kategoria o id: " + moveId + "nie została znaleziona"));
         category.applyParentId(newParentId);
+        categoryRepository.save(category);
     }
 }
 

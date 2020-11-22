@@ -7,6 +7,7 @@ import pl.sda.finalapp.app.categories.api.CategoryTreeDTO;
 import pl.sda.finalapp.app.categories.persistence.CategoryFromFileDTO;
 import pl.sda.finalapp.app.categories.persistence.CategoryDAO;
 import pl.sda.finalapp.app.categories.persistence.CategoryRepository;
+import pl.sda.finalapp.app.products.ProductService;
 import pl.sda.finalapp.app.products.ProductType;
 
 import javax.annotation.PostConstruct;
@@ -19,13 +20,11 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryService {
 
-
     @Autowired
     private CategoryRepository categoryRepository;
 
     public List<CategoryTreeDTO> findCategories(String searchText) {
-        final List<CategoryTreeDTO> dtos = categoryRepository.findAll()
-                .stream()
+        final List<CategoryTreeDTO> dtos = categoryRepository.findAll().stream()
                 .map(c -> c.toTreeDTO())
                 .collect(Collectors.toList());
 

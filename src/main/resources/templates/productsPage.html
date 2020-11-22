@@ -3,18 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
+    <div th:replace="/fragments/header :: header-css"></div>
+    <style>
+        .pagination {
+            display: inline-block;
+        }
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {background-color: grey;}
+        .active {
+            background: aqua;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="/fragments/header :: headerFragment">
 </div>
 <form action="/products" method="get">
-    <input name="searchText" placeholder="Wyszukaj">
+    <input th:value="${searchText}" name="searchText" placeholder="Wyszukaj">
     <select name="productType">
         <option th:value="''"
                 th:text="'Choose type'">
 
         </option>
-        <option th:each="t : ${productTypesList}"
+        <option
+                th:each="t : ${productTypesList}"
+                th:selected="${t eq productType}"
                 th:value="${t}"
                 th:text="${t.plName}">
         </option>
@@ -23,10 +45,11 @@
         <option th:value="''"
                 th:text="'Choose category'"></option>
         <option th:each="c : ${categoriesList}"
+                th:selected="${c.id eq categoryId}"
                 th:value="${c.id}"
                 th:text="${c.id} + ' ' + ${c.categoryName}" id="parentsList"></option>
     </select>
-    <button>search</button>
+    <button>Search</button>
 </form>
 <table border="1">
     <tr>
@@ -39,7 +62,7 @@
         <th>Category</th>
         <th>Actions</th>
     </tr>
-    <tr th:each="p : ${productsList}">
+    <tr th:each="p : ${productsPage.content}">
         <td th:text="${p.id}">ID</td>
         <td th:text="${p.title}">Title</td>
         <td th:text="${p.description}">Description</td>
@@ -51,6 +74,12 @@
         <td><a th:href="@{/products/{id}(id=${p.id})}">Edytuj produkt</a></td>
     </tr>
 </table>
+<div th:if="${productsPage.totalPages > 0}" class="pagination"
+     th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{${urlBegin}(size=${productsPage.size}, page=${pageNumber})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber==productsPage.number + 1} ? 'active'"></a>
+</div>
 
 <hr>
 <form action="/products" method="post">
@@ -77,5 +106,6 @@
     </select>
     <button>Add product</button>
 </form>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

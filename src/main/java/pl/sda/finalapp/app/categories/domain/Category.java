@@ -10,6 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
@@ -24,7 +25,6 @@ public class Category {
     }
 
     public Category(String categoryName, Integer parentId) {
-
         this.categoryName = categoryName;
         this.parentId = parentId;
     }
@@ -47,11 +47,10 @@ public class Category {
     }
 
     public CategoryTreeDTO toTreeDTO() {
-        return new CategoryTreeDTO(id,parentId,categoryName);
-
+        return new CategoryTreeDTO(id, parentId, categoryName);
     }
 
     public CategoryDTO toDTO() {
-        return new CategoryDTO(id,categoryName);
+        return new CategoryDTO(id, categoryName);
     }
 }

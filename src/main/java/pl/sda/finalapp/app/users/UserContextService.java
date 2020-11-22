@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserContextService {
+
     public String userName(){
-        Authentication authentication = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
-        if (authentication instanceof AnonymousAuthenticationToken){
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication instanceof AnonymousAuthenticationToken){
             return null;
         }
         return authentication.getName();
     }
+
 }

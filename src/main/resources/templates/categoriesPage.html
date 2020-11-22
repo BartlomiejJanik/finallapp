@@ -4,12 +4,13 @@
     <meta charset="utf-8">
     <title>Categories</title>
     <!-- 2 load the theme CSS file -->
-    <!--    <div th:replace="fragments/header :: header-css"/>-->
+    <div th:replace="fragments/header :: header-css"/>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
 </head>
 <body>
-<div th:replace="fragments/header :: headerFragment"></div>
+<div th:replace="/fragments/header :: headerFragment">
+</div>
 <!--<div th:replace="fragments/header :: header"/>-->
 <form action="/categories">
     <input type="text" name="searchText" th:value="${searchText}">
@@ -45,11 +46,20 @@
         })
         $('#container').on('move_node.jstree', function (e, data) {
             console.log(data)
-            $.post("/moveCategory", {newParentId: data.parent, movedId: data.node.id})
+            console.log("data.parent=" + data.parent)
+            console.log("data.node.id=" + data.node.id)
+            $.post("/moveCategory",
+                {
+                    newParentId: data.parent,
+                    movedId: data.node.id
+                }
+            ).success(function(data){
+                alert(data)
+            })
         })
     });
 </script>
-<!--<div th:replace="fragments/footer :: footer"></div>-->
+<div th:replace="fragments/footer :: footer"></div>
 <footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>

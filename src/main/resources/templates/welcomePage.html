@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
+    <div th:replace="/fragments/header :: header-css"></div>
 </head>
 <body>
+<div th:replace="/fragments/header :: headerFragment">
+</div>
 <p th:text="'You have registered with email: '+${email}">
-
 </p>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

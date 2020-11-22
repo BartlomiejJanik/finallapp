@@ -3,53 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
+    <div th:replace="/fragments/header :: header-css"></div>
 </head>
 <body>
-<div th:replace="fragments/header :: headerFragment"></div>
-<form th:object="${userRegistrationData}" action="/registration" method="post">
+<div th:replace="/fragments/header :: headerFragment">
+</div>
+<form class="form-signin" th:object="${userRegistrationData}" action="/registration" method="post">
     <label for="fn">First Name</label>
-    <input th:field="*{firstName}" id="fn">
-    <p th:if="${firstNameValidationResult}" th:text="${firstNameValidationResult}"></p>
+    <input class="form-control" th:field="*{firstName}" id="fn">
+    <p class="error" th:if="${firstNameValidationResult}" th:text="${firstNameValidationResult}"></p>
     <br>
     <label for="lname">Last Name</label>
-    <input th:field="*{lastName}" id="lname">
+    <input class="form-control" th:field="*{lastName}" id="lname">
     <br>
     <label for="email">E-mail</label>
-    <input th:field="*{eMail}" id="email">
-    <p th:if="${emailAlreadyExists}" th:text="${emailAlreadyExists}"></p>
+    <input class="form-control" th:field="*{eMail}" id="email">
+    <p class="error" th:if="${emailAlreadyExists}" th:text="${emailAlreadyExists}"></p>
     <br>
     <label for="pass">Password</label>
-    <input th:field="*{password}" id="pass">
+    <input class="form-control" th:field="*{password}" id="pass">
     <br>
     <label for="city">City</label>
-    <input th:field="*{city}" id="city">
+    <input class="form-control" th:field="*{city}" id="city">
     <br>
     <label for="country">Country</label>
-    <select th:field="*{country}">
+    <select class="form-control" th:field="*{country}">
         <option th:value="''" th:text="Choose"></option>
         <option th:each="c : ${countryList}" th:value="${c.symbol}" th:text="${c.countryName}" id="country"></option>
     </select>
     <br>
     <label for="zip">Zip code</label>
-    <input th:field="*{zipCode}" id="zip">
+    <input class="form-control" th:field="*{zipCode}" id="zip">
     <br>
     <label for="street">Street</label>
-    <input th:field="*{street}" id="street">
+    <input class="form-control" th:field="*{street}" id="street">
     <br>
     <label for="bd">Birth date</label>
-    <input th:field="*{birthDate}" id="bd">
+    <input class="form-control" th:field="*{birthDate}" id="bd">
     <br>
     <label for="pesel">PESEL</label>
-    <input th:field="*{pesel}" id="pesel">
+    <input class="form-control" th:field="*{pesel}" id="pesel">
     <br>
     <label for="pn">Phone number</label>
-    <input th:field="*{phone}" id="pn">
+    <input class="form-control" th:field="*{phone}" id="pn">
     <br>
     <label for="preferEmail">Prefer E-mail</label>
     <input type="checkbox" th:field="*{preferEmails}" id="preferEmail">
     <br>
-    <button>Register</button>
+    <button class="btn btn-lg btn-primary btn-block">Register</button>
 </form>
-
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

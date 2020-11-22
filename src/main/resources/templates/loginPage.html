@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
+    <div th:replace="/fragments/header :: header-css"></div>
 </head>
-<body>
+<body class="text-center">
+<div th:replace="/fragments/header :: headerFragment"></div>
 
-<form action="/login-process" method="post">
-    <p th:if="${param.error}">Podano nieprawidłowy login lub hasło.</p><br>
-    <input name="username" placeholder="Login"><br>
-    <input type="password" name="password" placeholder="Password"><br>
-    <button>Zaloguj</button>
-</form>
-
+<div class="container">
+    <form class="form-signin" action="/login-process" method="post">
+        <p class="alert alert-danger" th:if="${param.error}">Podano nieprawidłowy login lub hasło.</p><br>
+        <h1 class="h3 mb-3 font-weight-normal">Zaloguj się</h1>
+        <input class="form-control" name="username" placeholder="Login"><br>
+        <input class="form-control" type="password" name="password" placeholder="Password"><br>
+        <button class="btn btn-lg btn-primary btn-block">Zaloguj</button>
+    </form>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

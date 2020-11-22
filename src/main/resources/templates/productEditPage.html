@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edycja produktu</title>
+    <div th:replace="/fragments/header :: header-css"></div>
 </head>
 <body>
 <div th:replace="/fragments/header :: headerFragment">
@@ -30,5 +31,6 @@
     </select>
     <button>Save product</button>
 </form>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

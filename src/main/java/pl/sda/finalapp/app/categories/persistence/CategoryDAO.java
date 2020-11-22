@@ -14,14 +14,13 @@ import java.util.stream.Collectors;
 public class CategoryDAO {
 
     private static CategoryDAO INSTANCE;
-    private List<CategoryFromFileDTO> categoryList = populateCategories();
+    private List<CategoryFromFileDTO> categoryFromFileDTOList = populateCategories();
 
     private CategoryDAO() {
     }
 
     public List<CategoryFromFileDTO> getCategoryList() {
-
-        return categoryList;
+        return categoryFromFileDTOList;
     }
 
     public static CategoryDAO getInstance() {
@@ -39,7 +38,7 @@ public class CategoryDAO {
     private List<CategoryFromFileDTO> populateCategories() {
         List<String> categoriesList = new ArrayList<>();
         ClassLoader classLoader = this.getClass().getClassLoader();
-        URL categoriesUrl = classLoader.getResource("categories.txt");
+        URL categoriesUrl = classLoader.getResource("kategorie.txt");
 
         try {
             categoriesList = Files.readAllLines(Paths.get(categoriesUrl.toURI()));

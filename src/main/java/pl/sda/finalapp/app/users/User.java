@@ -51,9 +51,7 @@ public class User {
             roles.add(role);
         } else if (!roles.contains(role)) {
             roles.add(role);
-
         }
-
     }
 
     public static User applyDTO(UserRegistrationDTO dto, String passwordHash) {

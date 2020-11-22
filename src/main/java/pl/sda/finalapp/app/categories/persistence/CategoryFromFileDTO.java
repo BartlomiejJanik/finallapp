@@ -13,16 +13,16 @@ public class CategoryFromFileDTO {
     private Integer depth;
 
     public static CategoryFromFileDTO applyFromCategory(String t){
-        CategoryFromFileDTO category = new CategoryFromFileDTO();
-        category.categoryName = t.trim();
-        category.id = ++idCounter;
-        category.depth = calculateDepth(t);
+        CategoryFromFileDTO categoryFromFileDTO = new CategoryFromFileDTO();
+        categoryFromFileDTO.categoryName = t.trim();
+        categoryFromFileDTO.id = ++idCounter;
+        categoryFromFileDTO.depth = calculateDepth(t);
 
-        return category;
+        return categoryFromFileDTO;
     }
 
     private static int calculateDepth(String t) {
-        if(!t.startsWith(" ")){
+        if(!t.startsWith(" ") && !t.startsWith("\t")){
             return 0;
         }
         return t.split("\\S+")[0].length();

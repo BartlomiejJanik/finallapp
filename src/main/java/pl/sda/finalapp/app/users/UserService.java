@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -19,10 +21,13 @@ public class UserService {
                 .ifPresent(e -> {
                     throw new EmailAlreadyExistsException("Email " + dto.geteMail() + " already in use.");
                 });
-        String passwordHash = passwordEncoder.encode(dto.getPassword());
-        User user = User.applyDTO(dto, passwordHash);
+        final String passwordHash = passwordEncoder.encode(dto.getPassword());
+        final User user = User.applyDTO(dto, passwordHash);
         user.addRole(roleRepository.findByRoleName(Role.USER));
         userRepository.save(user);
     }
 
+    public Optional<User> findUserByEMail(String userEMail) {
+        return userRepository.findByEMail(userEMail);
+    }
 }
